@@ -3,9 +3,9 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   fmiVersion="2.0"
   modelName="Version_7.Vehicles.vehicle"
-  guid="{c98dc9c6-3154-4688-b56f-ffd331fe0859}"
+  guid="{b7f62e51-0ca3-4b3c-a1a3-6bbed2d046e3}"
   generationTool="Dymola Version 2017 (64-bit), 2016-06-23"
-  generationDateAndTime="2017-01-01T09:46:37Z"
+  generationDateAndTime="2017-01-01T10:27:00Z"
   variableNamingConvention="structured"
   numberOfEventIndicators="14">
   <ModelExchange

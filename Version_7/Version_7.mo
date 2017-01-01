@@ -170,8 +170,9 @@ package Version_7
     end vehicle_2;
 
     model vehicle
+      //git
       Version_7.Driveline.transmission_modular trans(m=chassis.m, st_agear=
-            st_agear);
+            st_agear,hf = hf);
       Version_7.body_and_wheel.chassis chassis;
       Version_7.body_and_wheel.wheel wheel1;
       Version_7.body_and_wheel.wheel wheel2;
@@ -180,6 +181,7 @@ package Version_7
       input Real swa;
       input Real theta;
       input Real r_gear;
+      parameter Real hf= 1;
       parameter Integer st_agear= 4;
       output Real vx;
       output Real Fxr;
@@ -360,6 +362,7 @@ package Version_7
       parameter Real E_factor = 0.45;
       parameter SI.Torque Tsplit = 700;
       parameter Real k = 1 "Boost pressure coefficient";
+      parameter Real hf;
       Real perc_throttle;
       Real Aped "Accelerator pedal position [%]";
       SI.Velocity Vx "velocity of the vehicle m/s";
@@ -375,7 +378,7 @@ package Version_7
       SI.Force Fx "Force to compute ax";
       SI.AngularVelocity w_engine(start = w_eng_idl) "engine speed in rad/s";
       SI.AngularVelocity rpm_engine "engine speed in rpm";
-       Modelica.Blocks.Tables.CombiTable1Ds tab_torque(table = [0,0;
+      Modelica.Blocks.Tables.CombiTable1Ds tab_torque(table = [0,0;
                                                                  62.8318,1660;
                                                                  73.3038,1880;
                                                                  83.775,2240;
@@ -399,7 +402,8 @@ package Version_7
       max_torque_alim = if der(Vx) > axh then E_factor*max_torque else if der(Vx) < axl then max_torque else max_torque*( (((der(Vx)-axl)*(E_factor-1))/(axh-axl)) + 1);
       min_torque = k3min * rpm_engine ^ 3 + k2min * rpm_engine ^ 2 + k1min * rpm_engine + k0min;
       perc_throttle = max(min(Aped/100, 1), 0.0);
-      torque = (perc_throttle * ((max_torque_alim) - min_torque) + min_torque) * (1 - tanh((w_engine - w_eng_max) * 0.01));
+      torque = (perc_throttle)*(max_torque_alim)*(1 - tanh((w_engine - w_eng_max) * 0.01))*hf - 40;
+      //torque = (perc_throttle * ((max_torque_alim) - min_torque) + min_torque) * (1 - tanh((w_engine - w_eng_max) * 0.01))*hf;
       Tbase = min(torque,Tsplit);
       Tdynreq = torque - Tbase;
       der(Ttop) = k*(Tdynreq - Ttop);
