@@ -1,0 +1,2522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="2.0"
+  modelName="Version_7.Vehicles.vehicle"
+  guid="{c98dc9c6-3154-4688-b56f-ffd331fe0859}"
+  generationTool="Dymola Version 2017 (64-bit), 2016-06-23"
+  generationDateAndTime="2017-01-01T09:46:37Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="14">
+  <ModelExchange
+    modelIdentifier="Version_07_Vehicles_vehicle"
+    canGetAndSetFMUstate="true"
+    providesDirectionalDerivative="true"/>
+  <CoSimulation
+    modelIdentifier="Version_07_Vehicles_vehicle"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="true"
+    maxOutputDerivativeOrder="1"
+    canGetAndSetFMUstate="true"
+    providesDirectionalDerivative="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="1"/>
+    <Unit
+      name="J.s.rad-1">
+      <BaseUnit kg="1"
+        m="2"
+        s="-1"
+        rad="-1"/>
+    </Unit>
+    <Unit
+      name="J.s2.rad-1">
+      <BaseUnit kg="1"
+        m="2"
+        rad="-1"/>
+    </Unit>
+    <Unit
+      name="J.s2.rad-2">
+      <BaseUnit kg="1"
+        m="2"
+        rad="-2"/>
+    </Unit>
+    <Unit
+      name="J.s3.rad-3">
+      <BaseUnit kg="1"
+        m="2"
+        s="1"
+        rad="-3"/>
+    </Unit>
+    <Unit
+      name="N">
+      <BaseUnit kg="1"
+        m="1"
+        s="-2"/>
+    </Unit>
+    <Unit
+      name="N.m">
+      <BaseUnit kg="1"
+        m="2"
+        s="-2"/>
+    </Unit>
+    <Unit
+      name="W">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"/>
+    </Unit>
+    <Unit
+      name="kg">
+      <BaseUnit kg="1"/>
+    </Unit>
+    <Unit
+      name="m">
+      <BaseUnit m="1"/>
+    </Unit>
+    <Unit
+      name="m/rad">
+      <BaseUnit m="1"
+        rad="-1"/>
+    </Unit>
+    <Unit
+      name="m/s">
+      <BaseUnit m="1"
+        s="-1"/>
+    </Unit>
+    <Unit
+      name="m/s2">
+      <BaseUnit m="1"
+        s="-2"/>
+    </Unit>
+    <Unit
+      name="m2.kg">
+      <BaseUnit kg="1"
+        m="2"/>
+    </Unit>
+    <Unit
+      name="rad">
+      <BaseUnit rad="1"/>
+      <DisplayUnit
+        name="deg"
+        factor="57.29577951308232"/>
+    </Unit>
+    <Unit
+      name="rad/s">
+      <BaseUnit s="-1"
+        rad="1"/>
+    </Unit>
+    <Unit
+      name="rad/s2">
+      <BaseUnit s="-2"
+        rad="1"/>
+    </Unit>
+    <Unit
+      name="s-1">
+      <BaseUnit s="-1"/>
+    </Unit>
+    <Unit
+      name="s-2">
+      <BaseUnit s="-2"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealInput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealOutput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Acceleration">
+      <Real
+        quantity="Acceleration"
+        unit="m/s2"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Angle">
+      <Real
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.AngularVelocity">
+      <Real
+        quantity="AngularVelocity"
+        unit="rad/s"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Force">
+      <Real
+        quantity="Force"
+        unit="N"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Mass">
+      <Real
+        quantity="Mass"
+        unit="kg"
+        min="0.0"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Torque">
+      <Real
+        quantity="Torque"
+        unit="N.m"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Velocity">
+      <Real
+        quantity="Velocity"
+        unit="m/s"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Types.Smoothness">
+      <Enumeration>
+        <Item name="LinearSegments"
+          value="1"
+          description="Table points are linearly interpolated"/>
+        <Item name="ContinuousDerivative"
+          value="2"
+          description="Table points are interpolated (by Akima splines) such that the first derivative is continuous"/>
+        <Item name="ConstantSegments"
+          value="3"
+          description="Table points are not interpolated, but the value from the previous abscissa point is returned"/>
+        <Item name="MonotoneContinuousDerivative1"
+          value="4"
+          description="Table points are interpolated (by Fritsch-Butland splines) such that the monotonicity is preserved and the first derivative is continuous"/>
+        <Item name="MonotoneContinuousDerivative2"
+          value="5"
+          description="Table points are interpolated (by Steffen splines) such that the monotonicity is preserved and the first derivative is continuous"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="1.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <!-- Index for next variable = 1 -->
+    <ScalarVariable
+      name="trans.pi"
+      valueReference="100663296"
+      variability="constant">
+      <Real start="3.141592653589793"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 2 -->
+    <ScalarVariable
+      name="trans.m"
+      valueReference="100663297"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Mass"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 3 -->
+    <ScalarVariable
+      name="trans.k3max"
+      valueReference="16777216"
+      causality="parameter"
+      variability="fixed">
+      <Real start="-1.246E-006"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 4 -->
+    <ScalarVariable
+      name="trans.k2max"
+      valueReference="16777217"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0.0001471"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 5 -->
+    <ScalarVariable
+      name="trans.k1max"
+      valueReference="16777218"
+      causality="parameter"
+      variability="fixed">
+      <Real start="6.511"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 6 -->
+    <ScalarVariable
+      name="trans.k0max"
+      valueReference="16777219"
+      causality="parameter"
+      variability="fixed">
+      <Real start="-2228.7"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 7 -->
+    <ScalarVariable
+      name="trans.k3min"
+      valueReference="16777220"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="J.s3.rad-3"
+        start="-1.59E-008"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 8 -->
+    <ScalarVariable
+      name="trans.k2min"
+      valueReference="16777221"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="J.s2.rad-2"
+        start="8.752E-005"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 9 -->
+    <ScalarVariable
+      name="trans.k1min"
+      valueReference="16777222"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="J.s.rad-1"
+        start="-0.197569"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 10 -->
+    <ScalarVariable
+      name="trans.k0min"
+      valueReference="16777223"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="N.m"
+        start="-4.22681"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 11 -->
+    <ScalarVariable
+      name="trans.w_eng_max"
+      valueReference="100663298"
+      description="maximum engine rotation"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"
+        start="209.43951023931953"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 12 -->
+    <ScalarVariable
+      name="trans.w_eng_idl"
+      valueReference="100663299"
+      description=" engine idle speed"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"
+        start="62.83185307179586"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 13 -->
+    <ScalarVariable
+      name="trans.axh"
+      valueReference="16777224"
+      description="Upper acceleration limit"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Acceleration"
+        start="0.7"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 14 -->
+    <ScalarVariable
+      name="trans.axl"
+      valueReference="16777225"
+      description="Lower acceleration limit"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Acceleration"
+        start="0.6"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 15 -->
+    <ScalarVariable
+      name="trans.E_factor"
+      valueReference="16777226"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        start="0.45"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 16 -->
+    <ScalarVariable
+      name="trans.Tsplit"
+      valueReference="16777227"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Torque"
+        start="700"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 17 -->
+    <ScalarVariable
+      name="trans.k"
+      valueReference="16777228"
+      description="Boost pressure coefficient"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="s-1"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 18 -->
+    <ScalarVariable
+      name="trans.hf"
+      valueReference="100663300"
+      variability="tunable">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 19 -->
+    <ScalarVariable
+      name="trans.perc_throttle"
+      valueReference="637534213">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 20 -->
+    <ScalarVariable
+      name="trans.Aped"
+      valueReference="352321536"
+      description="Accelerator pedal position [%]">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 21 -->
+    <ScalarVariable
+      name="trans.Vx"
+      valueReference="33554432"
+      description="velocity of the vehicle m/s">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 22 -->
+    <ScalarVariable
+      name="der(trans.Vx)"
+      valueReference="587202560"
+      description="der(velocity of the vehicle m/s)">
+      <Real
+        unit="m/s2"
+        derivative="21"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 23 -->
+    <ScalarVariable
+      name="trans.torque"
+      valueReference="637534214"
+      description="engine torque">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 24 -->
+    <ScalarVariable
+      name="trans.Te"
+      valueReference="637534215">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 25 -->
+    <ScalarVariable
+      name="trans.max_torque"
+      valueReference="637534216">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 26 -->
+    <ScalarVariable
+      name="trans.max_torque_alim"
+      valueReference="637534217">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 27 -->
+    <ScalarVariable
+      name="trans.min_torque"
+      valueReference="905969674">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 28 -->
+    <ScalarVariable
+      name="trans.Tbase"
+      valueReference="637534219">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 29 -->
+    <ScalarVariable
+      name="trans.Tdynreq"
+      valueReference="637534220">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 30 -->
+    <ScalarVariable
+      name="trans.Ttop"
+      valueReference="33554433"
+      initial="exact">
+      <Real
+        declaredType="Modelica.SIunits.Torque"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 31 -->
+    <ScalarVariable
+      name="der(trans.Ttop)"
+      valueReference="587202561">
+      <Real
+        unit="W"
+        derivative="30"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 32 -->
+    <ScalarVariable
+      name="trans.T_e"
+      valueReference="637534221">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 33 -->
+    <ScalarVariable
+      name="trans.Fx"
+      valueReference="369098766"
+      description="Force to compute ax">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 34 -->
+    <ScalarVariable
+      name="trans.w_engine"
+      valueReference="637534223"
+      description="engine speed in rad/s">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 35 -->
+    <ScalarVariable
+      name="der(trans.w_engine)"
+      valueReference="637534224"
+      description="der(engine speed in rad/s)">
+      <Real
+        unit="rad/s2"
+        derivative="34"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 36 -->
+    <ScalarVariable
+      name="trans.rpm_engine"
+      valueReference="905969681"
+      description="engine speed in rpm">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 37 -->
+    <ScalarVariable
+      name="trans.tab_torque.nout"
+      valueReference="100663314"
+      description="Number of outputs"
+      variability="constant">
+      <Integer start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 38 -->
+    <ScalarVariable
+      name="trans.tab_torque.u"
+      valueReference="637534223"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 39 -->
+    <ScalarVariable
+      name="trans.tab_torque.y[1]"
+      valueReference="637534216"
+      description="Connector of Real output signals">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 40 -->
+    <ScalarVariable
+      name="trans.tab_torque.tableOnFile"
+      valueReference="100663315"
+      description="= true, if table is defined on file or in function usertab"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 41 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[1,1]"
+      valueReference="16777229"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 42 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[1,2]"
+      valueReference="16777230"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 43 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[2,1]"
+      valueReference="16777231"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="62.8318"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 44 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[2,2]"
+      valueReference="16777232"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1660.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 45 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[3,1]"
+      valueReference="16777233"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="73.3038"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 46 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[3,2]"
+      valueReference="16777234"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1880.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 47 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[4,1]"
+      valueReference="16777235"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="83.775"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 48 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[4,2]"
+      valueReference="16777236"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2240.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 49 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[5,1]"
+      valueReference="16777237"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="94.247"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 50 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[5,2]"
+      valueReference="16777238"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2900.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 51 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[6,1]"
+      valueReference="16777239"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="104.719"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 52 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[6,2]"
+      valueReference="16777240"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3550.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 53 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[7,1]"
+      valueReference="16777241"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="115.191"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 54 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[7,2]"
+      valueReference="16777242"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3550.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 55 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[8,1]"
+      valueReference="16777243"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="125.663"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 56 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[8,2]"
+      valueReference="16777244"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3550.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 57 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[9,1]"
+      valueReference="16777245"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="136.135"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 58 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[9,2]"
+      valueReference="16777246"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3550.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 59 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[10,1]"
+      valueReference="16777247"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="146.607"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 60 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[10,2]"
+      valueReference="16777248"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3550.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 61 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[11,1]"
+      valueReference="16777249"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="157.079"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 62 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[11,2]"
+      valueReference="16777250"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3470.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 63 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[12,1]"
+      valueReference="16777251"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="167.551"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 64 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[12,2]"
+      valueReference="16777252"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3310.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 65 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[13,1]"
+      valueReference="16777253"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="178.023"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 66 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[13,2]"
+      valueReference="16777254"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3120.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 67 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[14,1]"
+      valueReference="16777255"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="188.495"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 68 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[14,2]"
+      valueReference="16777256"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2880.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 69 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[15,1]"
+      valueReference="16777257"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="198.967"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 70 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[15,2]"
+      valueReference="16777258"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2660.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 71 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[16,1]"
+      valueReference="16777259"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="209.439"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 72 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[16,2]"
+      valueReference="16777260"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1680.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 73 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[17,1]"
+      valueReference="16777261"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="219.911"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 74 -->
+    <ScalarVariable
+      name="trans.tab_torque.table[17,2]"
+      valueReference="16777262"
+      description="Table matrix (grid = first column; e.g., table=[0,2])"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 75 -->
+    <ScalarVariable
+      name="trans.tab_torque.verboseRead"
+      valueReference="16777263"
+      description="= true, if info message that file is loading is to be printed"
+      causality="parameter"
+      variability="fixed">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 76 -->
+    <ScalarVariable
+      name="trans.tab_torque.columns[1]"
+      valueReference="100663316"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 77 -->
+    <ScalarVariable
+      name="trans.tab_torque.smoothness"
+      valueReference="100663317"
+      description="Smoothness of table interpolation"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Smoothness"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 78 -->
+    <ScalarVariable
+      name="trans.i_tm[1]"
+      valueReference="16777264"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="14.356"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 79 -->
+    <ScalarVariable
+      name="trans.i_tm[2]"
+      valueReference="16777265"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="11.7239"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 80 -->
+    <ScalarVariable
+      name="trans.i_tm[3]"
+      valueReference="16777266"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="9.0363"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 81 -->
+    <ScalarVariable
+      name="trans.i_tm[4]"
+      valueReference="16777267"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="7.0941"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 82 -->
+    <ScalarVariable
+      name="trans.i_tm[5]"
+      valueReference="16777268"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="5.5382"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 83 -->
+    <ScalarVariable
+      name="trans.i_tm[6]"
+      valueReference="16777269"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="4.3478"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 84 -->
+    <ScalarVariable
+      name="trans.i_tm[7]"
+      valueReference="16777270"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3.4363"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 85 -->
+    <ScalarVariable
+      name="trans.i_tm[8]"
+      valueReference="16777271"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2.6977"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 86 -->
+    <ScalarVariable
+      name="trans.i_tm[9]"
+      valueReference="16777272"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2.0783"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 87 -->
+    <ScalarVariable
+      name="trans.i_tm[10]"
+      valueReference="16777273"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1.6316"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 88 -->
+    <ScalarVariable
+      name="trans.i_tm[11]"
+      valueReference="16777274"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1.2738"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 89 -->
+    <ScalarVariable
+      name="trans.i_tm[12]"
+      valueReference="16777275"
+      description="gear ratios from 1st up to 12th gear"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 90 -->
+    <ScalarVariable
+      name="trans.i_final"
+      valueReference="16777276"
+      description="gear ratio final gear"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        unit="1"
+        start="3.46"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 91 -->
+    <ScalarVariable
+      name="trans.eff_tr"
+      valueReference="16777277"
+      description="transmission efficiency"
+      causality="parameter"
+      variability="tunable">
+      <Real start="0.9"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 92 -->
+    <ScalarVariable
+      name="trans.upshift[1]"
+      valueReference="16777278"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2.31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 93 -->
+    <ScalarVariable
+      name="trans.upshift[2]"
+      valueReference="16777279"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 94 -->
+    <ScalarVariable
+      name="trans.upshift[3]"
+      valueReference="16777280"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3.81"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 95 -->
+    <ScalarVariable
+      name="trans.upshift[4]"
+      valueReference="16777281"
+      causality="parameter"
+      variability="fixed">
+      <Real start="4.86"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 96 -->
+    <ScalarVariable
+      name="trans.upshift[5]"
+      valueReference="16777282"
+      causality="parameter"
+      variability="fixed">
+      <Real start="6.25"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 97 -->
+    <ScalarVariable
+      name="trans.upshift[6]"
+      valueReference="16777283"
+      causality="parameter"
+      variability="fixed">
+      <Real start="8.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 98 -->
+    <ScalarVariable
+      name="trans.upshift[7]"
+      valueReference="16777284"
+      causality="parameter"
+      variability="fixed">
+      <Real start="10.02"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 99 -->
+    <ScalarVariable
+      name="trans.upshift[8]"
+      valueReference="16777285"
+      causality="parameter"
+      variability="fixed">
+      <Real start="12.8"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 100 -->
+    <ScalarVariable
+      name="trans.upshift[9]"
+      valueReference="16777286"
+      causality="parameter"
+      variability="fixed">
+      <Real start="16.65"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 101 -->
+    <ScalarVariable
+      name="trans.upshift[10]"
+      valueReference="16777287"
+      causality="parameter"
+      variability="fixed">
+      <Real start="21.2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 102 -->
+    <ScalarVariable
+      name="trans.upshift[11]"
+      valueReference="16777288"
+      causality="parameter"
+      variability="fixed">
+      <Real start="27.1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 103 -->
+    <ScalarVariable
+      name="trans.upshift[12]"
+      valueReference="16777289"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1000000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 104 -->
+    <ScalarVariable
+      name="trans.downshift[1]"
+      valueReference="16777290"
+      causality="parameter"
+      variability="fixed">
+      <Real start="-1000000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 105 -->
+    <ScalarVariable
+      name="trans.downshift[2]"
+      valueReference="16777291"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2.2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 106 -->
+    <ScalarVariable
+      name="trans.downshift[3]"
+      valueReference="16777292"
+      causality="parameter"
+      variability="fixed">
+      <Real start="2.28"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 107 -->
+    <ScalarVariable
+      name="trans.downshift[4]"
+      valueReference="16777293"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 108 -->
+    <ScalarVariable
+      name="trans.downshift[5]"
+      valueReference="16777294"
+      causality="parameter"
+      variability="fixed">
+      <Real start="4.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 109 -->
+    <ScalarVariable
+      name="trans.downshift[6]"
+      valueReference="16777295"
+      causality="parameter"
+      variability="fixed">
+      <Real start="6.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 110 -->
+    <ScalarVariable
+      name="trans.downshift[7]"
+      valueReference="16777296"
+      causality="parameter"
+      variability="fixed">
+      <Real start="7.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 111 -->
+    <ScalarVariable
+      name="trans.downshift[8]"
+      valueReference="16777297"
+      causality="parameter"
+      variability="fixed">
+      <Real start="9.4"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 112 -->
+    <ScalarVariable
+      name="trans.downshift[9]"
+      valueReference="16777298"
+      causality="parameter"
+      variability="fixed">
+      <Real start="12.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 113 -->
+    <ScalarVariable
+      name="trans.downshift[10]"
+      valueReference="16777299"
+      causality="parameter"
+      variability="fixed">
+      <Real start="15.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 114 -->
+    <ScalarVariable
+      name="trans.downshift[11]"
+      valueReference="16777300"
+      causality="parameter"
+      variability="fixed">
+      <Real start="20.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 115 -->
+    <ScalarVariable
+      name="trans.downshift[12]"
+      valueReference="16777301"
+      causality="parameter"
+      variability="fixed">
+      <Real start="25.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 116 -->
+    <ScalarVariable
+      name="trans.max_drive_torque"
+      valueReference="16777302"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Torque"
+        start="1200000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 117 -->
+    <ScalarVariable
+      name="trans.dds"
+      valueReference="16777303"
+      description="damping factor for drive shaft flexibility "
+      causality="parameter"
+      variability="fixed">
+      <Real start="5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 118 -->
+    <ScalarVariable
+      name="trans.st_agear"
+      valueReference="100663320"
+      variability="fixed">
+      <Integer/>
+    </ScalarVariable>
+    <!-- Index for next variable = 119 -->
+    <ScalarVariable
+      name="trans.agear"
+      valueReference="369098777"
+      description=" the automatic gear"
+      variability="discrete">
+      <Integer/>
+    </ScalarVariable>
+    <!-- Index for next variable = 120 -->
+    <ScalarVariable
+      name="trans.i_T"
+      valueReference="905969690"
+      description="total transmission ratio"
+      variability="discrete">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 121 -->
+    <ScalarVariable
+      name="trans.r_gear"
+      valueReference="352321540">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 122 -->
+    <ScalarVariable
+      name="trans.Je"
+      valueReference="16777322">
+      <Real
+        unit="J.s2.rad-1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 123 -->
+    <ScalarVariable
+      name="trans.Tc"
+      valueReference="637534235">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 124 -->
+    <ScalarVariable
+      name="trans.Tt"
+      valueReference="637534235">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 125 -->
+    <ScalarVariable
+      name="trans.Tp"
+      valueReference="637534236">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 126 -->
+    <ScalarVariable
+      name="trans.Tf"
+      valueReference="637534236">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 127 -->
+    <ScalarVariable
+      name="trans.Td"
+      valueReference="637534237">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 128 -->
+    <ScalarVariable
+      name="trans.Tw"
+      valueReference="637534237">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 129 -->
+    <ScalarVariable
+      name="trans.w_c"
+      valueReference="637534238">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 130 -->
+    <ScalarVariable
+      name="der(trans.w_c)"
+      valueReference="637534239">
+      <Real
+        unit="rad/s2"
+        derivative="129"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 131 -->
+    <ScalarVariable
+      name="trans.w_t"
+      valueReference="637534238">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 132 -->
+    <ScalarVariable
+      name="trans.w_p"
+      valueReference="637534240">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 133 -->
+    <ScalarVariable
+      name="der(trans.w_p)"
+      valueReference="637534241">
+      <Real
+        unit="rad/s2"
+        derivative="132"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 134 -->
+    <ScalarVariable
+      name="trans.w_f"
+      valueReference="637534240">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 135 -->
+    <ScalarVariable
+      name="trans.w_w"
+      valueReference="637534242">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 136 -->
+    <ScalarVariable
+      name="der(trans.w_w)"
+      valueReference="637534243">
+      <Real
+        unit="rad/s2"
+        derivative="135"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 137 -->
+    <ScalarVariable
+      name="trans.M_wheel_1"
+      valueReference="100663332"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Torque"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 138 -->
+    <ScalarVariable
+      name="trans.M_wheel_2"
+      valueReference="637534245">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 139 -->
+    <ScalarVariable
+      name="trans.w_wheel_1"
+      valueReference="33554439">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 140 -->
+    <ScalarVariable
+      name="trans.w_wheel_2"
+      valueReference="33554440">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 141 -->
+    <ScalarVariable
+      name="trans.w_mean_wheels"
+      valueReference="637534242">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 142 -->
+    <ScalarVariable
+      name="trans.rev_torque"
+      valueReference="637534246">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 143 -->
+    <ScalarVariable
+      name="trans.r_c"
+      valueReference="637534247"
+      variability="discrete">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 144 -->
+    <ScalarVariable
+      name="chassis.g"
+      valueReference="100663336"
+      variability="constant">
+      <Real start="9.80665"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 145 -->
+    <ScalarVariable
+      name="chassis.m"
+      valueReference="16777304"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="kg"
+        start="9481"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 146 -->
+    <ScalarVariable
+      name="chassis.a"
+      valueReference="16777305"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="m"
+        start="1.68"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 147 -->
+    <ScalarVariable
+      name="chassis.b"
+      valueReference="16777306"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="m"
+        start="1.715"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 148 -->
+    <ScalarVariable
+      name="chassis.Izz"
+      valueReference="16777307"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="m2.kg"
+        start="41340"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 149 -->
+    <ScalarVariable
+      name="chassis.i_s"
+      valueReference="16777308"
+      causality="parameter"
+      variability="tunable">
+      <Real start="16"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 150 -->
+    <ScalarVariable
+      name="chassis.Iw"
+      valueReference="16777309"
+      causality="parameter"
+      variability="fixed">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 151 -->
+    <ScalarVariable
+      name="chassis.rw"
+      valueReference="16777310"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 152 -->
+    <ScalarVariable
+      name="chassis.Tb"
+      valueReference="16777311"
+      causality="parameter"
+      variability="tunable">
+      <Real start="25000"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 153 -->
+    <ScalarVariable
+      name="chassis.m_f"
+      valueReference="100663337"
+      variability="tunable">
+      <Real
+        unit="kg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 154 -->
+    <ScalarVariable
+      name="chassis.m_r"
+      valueReference="100663338"
+      variability="tunable">
+      <Real
+        unit="kg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 155 -->
+    <ScalarVariable
+      name="chassis.Fzf"
+      valueReference="100663339"
+      variability="tunable">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 156 -->
+    <ScalarVariable
+      name="chassis.Fzr"
+      valueReference="100663340"
+      variability="tunable">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 157 -->
+    <ScalarVariable
+      name="chassis.vx0"
+      valueReference="16777312"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        unit="m/s"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 158 -->
+    <ScalarVariable
+      name="chassis.Fxmax"
+      valueReference="16777313"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3000000"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 159 -->
+    <ScalarVariable
+      name="chassis.Pmax"
+      valueReference="16777314"
+      causality="parameter"
+      variability="fixed">
+      <Real start="29000"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 160 -->
+    <ScalarVariable
+      name="chassis.f_r"
+      valueReference="16777315"
+      description="Rolling resistance coefficient"
+      causality="parameter"
+      variability="tunable">
+      <Real start="0.0164"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 161 -->
+    <ScalarVariable
+      name="chassis.rho"
+      valueReference="16777316"
+      description="air density"
+      causality="parameter"
+      variability="tunable">
+      <Real start="1.225"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 162 -->
+    <ScalarVariable
+      name="chassis.Cd"
+      valueReference="16777317"
+      causality="parameter"
+      variability="tunable">
+      <Real start="0.7"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 163 -->
+    <ScalarVariable
+      name="chassis.ac"
+      valueReference="16777318"
+      causality="parameter"
+      variability="tunable">
+      <Real start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 164 -->
+    <ScalarVariable
+      name="chassis.cx"
+      valueReference="16777319"
+      causality="parameter"
+      variability="fixed">
+      <Real start="20"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 165 -->
+    <ScalarVariable
+      name="chassis.mu"
+      valueReference="16777320"
+      causality="parameter"
+      variability="fixed">
+      <Real start="0.9"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 166 -->
+    <ScalarVariable
+      name="chassis.ratio"
+      valueReference="16777321"
+      causality="parameter"
+      variability="fixed">
+      <Real start="3.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 167 -->
+    <ScalarVariable
+      name="chassis.Je"
+      valueReference="16777322"
+      description="Engine inertia"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="J.s2.rad-1"
+        start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 168 -->
+    <ScalarVariable
+      name="chassis.vy"
+      valueReference="33554434"
+      description="Vehicle Lateral Velocity [m/sec]"
+      initial="exact">
+      <Real
+        unit="m/s"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 169 -->
+    <ScalarVariable
+      name="der(chassis.vy)"
+      valueReference="587202562"
+      description="der(Vehicle Lateral Velocity [m/sec])">
+      <Real
+        unit="m/s2"
+        derivative="168"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 170 -->
+    <ScalarVariable
+      name="chassis.yaw_angle"
+      valueReference="33554435"
+      initial="exact">
+      <Real
+        unit="1"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 171 -->
+    <ScalarVariable
+      name="der(chassis.yaw_angle)"
+      valueReference="587202563">
+      <Real
+        unit="s-1"
+        derivative="170"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 172 -->
+    <ScalarVariable
+      name="chassis.yaw_velocity"
+      valueReference="33554436"
+      initial="exact">
+      <Real
+        unit="s-1"
+        start="0"
+        derivative="170"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 173 -->
+    <ScalarVariable
+      name="der(chassis.yaw_velocity)"
+      valueReference="587202564">
+      <Real
+        unit="s-2"
+        derivative="172"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 174 -->
+    <ScalarVariable
+      name="chassis.ay"
+      valueReference="335544329">
+      <Real
+        unit="m/s2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 175 -->
+    <ScalarVariable
+      name="chassis.Fx"
+      valueReference="369098766">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 176 -->
+    <ScalarVariable
+      name="chassis.Fxf"
+      valueReference="369098797">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 177 -->
+    <ScalarVariable
+      name="chassis.Fyr"
+      valueReference="369098798">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 178 -->
+    <ScalarVariable
+      name="chassis.Fxr"
+      valueReference="335544321">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 179 -->
+    <ScalarVariable
+      name="chassis.Fr"
+      valueReference="369098799">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 180 -->
+    <ScalarVariable
+      name="chassis.Fd"
+      valueReference="369098800">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 181 -->
+    <ScalarVariable
+      name="chassis.Fg"
+      valueReference="369098801">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 182 -->
+    <ScalarVariable
+      name="chassis.Tbw"
+      valueReference="637534258">
+      <Real
+        unit="N.m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 183 -->
+    <ScalarVariable
+      name="chassis.delta"
+      valueReference="335544326">
+      <Real
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 184 -->
+    <ScalarVariable
+      name="chassis.womega"
+      valueReference="369098803">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 185 -->
+    <ScalarVariable
+      name="chassis.swa"
+      valueReference="352321538"
+      description="Steering angle [rad]">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 186 -->
+    <ScalarVariable
+      name="chassis.brakeped"
+      valueReference="352321537"
+      description="[%] i/p of brake pedal">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 187 -->
+    <ScalarVariable
+      name="chassis.theta"
+      valueReference="352321539">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 188 -->
+    <ScalarVariable
+      name="chassis.vx"
+      valueReference="335544320"
+      description="Vehicle longitudinal velocity">
+      <Real
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 189 -->
+    <ScalarVariable
+      name="der(chassis.vx)"
+      valueReference="587202560"
+      description="der(Vehicle longitudinal velocity)">
+      <Real
+        unit="m/s2"
+        derivative="188"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 190 -->
+    <ScalarVariable
+      name="chassis.x"
+      valueReference="33554437"
+      initial="exact">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 191 -->
+    <ScalarVariable
+      name="der(chassis.x)"
+      valueReference="587202565">
+      <Real derivative="190"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 192 -->
+    <ScalarVariable
+      name="chassis.y"
+      valueReference="33554438"
+      initial="exact">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 193 -->
+    <ScalarVariable
+      name="der(chassis.y)"
+      valueReference="587202566">
+      <Real derivative="192"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 194 -->
+    <ScalarVariable
+      name="chassis.ax"
+      valueReference="335544324">
+      <Real
+        unit="m/s2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 195 -->
+    <ScalarVariable
+      name="chassis.Fyf"
+      valueReference="335544325">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 196 -->
+    <ScalarVariable
+      name="chassis.decl"
+      valueReference="335544327">
+      <Real
+        unit="m/s2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 197 -->
+    <ScalarVariable
+      name="wheel1.pi"
+      valueReference="100663348"
+      variability="constant">
+      <Real start="3.141592653589793"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 198 -->
+    <ScalarVariable
+      name="wheel1.rw"
+      valueReference="16777323"
+      description="Radius of wheel"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="m/rad"
+        start="0.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 199 -->
+    <ScalarVariable
+      name="wheel1.c"
+      valueReference="16777324"
+      causality="parameter"
+      variability="tunable">
+      <Real start="20"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 200 -->
+    <ScalarVariable
+      name="wheel1.mu"
+      valueReference="16777325"
+      causality="parameter"
+      variability="tunable">
+      <Real start="0.9"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 201 -->
+    <ScalarVariable
+      name="wheel1.vx0"
+      valueReference="16777326"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        unit="m/s"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 202 -->
+    <ScalarVariable
+      name="wheel1.I_tyre"
+      valueReference="16777327"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="J.s2.rad-1"
+        start="11"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 203 -->
+    <ScalarVariable
+      name="wheel1.Vx"
+      valueReference="33554432"
+      description="Chassis long velocity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 204 -->
+    <ScalarVariable
+      name="wheel1.Vy"
+      valueReference="369098805"
+      description="Chassis lat velocity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 205 -->
+    <ScalarVariable
+      name="wheel1.vx"
+      valueReference="369098806"
+      description="wheel lon velocity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 206 -->
+    <ScalarVariable
+      name="wheel1.vy"
+      valueReference="369098807"
+      description="wheel lat velcoity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 207 -->
+    <ScalarVariable
+      name="wheel1.omega"
+      valueReference="33554439"
+      description="wheel angular velocity">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 208 -->
+    <ScalarVariable
+      name="der(wheel1.omega)"
+      valueReference="587202567"
+      description="der(wheel angular velocity)">
+      <Real
+        unit="rad/s2"
+        derivative="207"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 209 -->
+    <ScalarVariable
+      name="wheel1.Fxy"
+      valueReference="369098808"
+      description="Tire Force combined">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 210 -->
+    <ScalarVariable
+      name="wheel1.delta"
+      valueReference="335544326">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 211 -->
+    <ScalarVariable
+      name="wheel1.Fz"
+      valueReference="100663339">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 212 -->
+    <ScalarVariable
+      name="wheel1.Fxw"
+      valueReference="369098809">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 213 -->
+    <ScalarVariable
+      name="wheel1.Fyw"
+      valueReference="369098810">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 214 -->
+    <ScalarVariable
+      name="wheel1.Fxv"
+      valueReference="369098797">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 215 -->
+    <ScalarVariable
+      name="wheel1.Fyv"
+      valueReference="335544325">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 216 -->
+    <ScalarVariable
+      name="wheel1.Drive_torque"
+      valueReference="100663355"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Torque"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 217 -->
+    <ScalarVariable
+      name="wheel1.Brake_torque"
+      valueReference="637534258">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 218 -->
+    <ScalarVariable
+      name="wheel1.sxy"
+      valueReference="369098812"
+      description="combined slip">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 219 -->
+    <ScalarVariable
+      name="wheel1.fsxy"
+      valueReference="369098813"
+      description="tire coefficient">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 220 -->
+    <ScalarVariable
+      name="wheel1.sx"
+      valueReference="369098814"
+      description="longitudinal slip">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 221 -->
+    <ScalarVariable
+      name="wheel1.sy"
+      valueReference="369098815"
+      description="Lateral slip">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 222 -->
+    <ScalarVariable
+      name="wheel1.Je"
+      valueReference="100663360"
+      description="Engine inertia"
+      variability="constant">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 223 -->
+    <ScalarVariable
+      name="wheel1.i_T"
+      valueReference="100663361"
+      description="gear and final drive ratio product"
+      variability="constant">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 224 -->
+    <ScalarVariable
+      name="wheel2.pi"
+      valueReference="100663362"
+      variability="constant">
+      <Real start="3.141592653589793"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 225 -->
+    <ScalarVariable
+      name="wheel2.rw"
+      valueReference="16777328"
+      description="Radius of wheel"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="m/rad"
+        start="0.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 226 -->
+    <ScalarVariable
+      name="wheel2.c"
+      valueReference="16777329"
+      causality="parameter"
+      variability="tunable">
+      <Real start="20"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 227 -->
+    <ScalarVariable
+      name="wheel2.mu"
+      valueReference="16777330"
+      causality="parameter"
+      variability="tunable">
+      <Real start="0.9"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 228 -->
+    <ScalarVariable
+      name="wheel2.vx0"
+      valueReference="16777331"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        unit="m/s"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 229 -->
+    <ScalarVariable
+      name="wheel2.I_tyre"
+      valueReference="16777332"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="J.s2.rad-1"
+        start="11"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 230 -->
+    <ScalarVariable
+      name="wheel2.Vx"
+      valueReference="33554432"
+      description="Chassis long velocity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 231 -->
+    <ScalarVariable
+      name="wheel2.Vy"
+      valueReference="369098819"
+      description="Chassis lat velocity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 232 -->
+    <ScalarVariable
+      name="wheel2.vx"
+      valueReference="33554432"
+      description="wheel lon velocity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 233 -->
+    <ScalarVariable
+      name="wheel2.vy"
+      valueReference="369098819"
+      description="wheel lat velcoity">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 234 -->
+    <ScalarVariable
+      name="wheel2.omega"
+      valueReference="33554440"
+      description="wheel angular velocity">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 235 -->
+    <ScalarVariable
+      name="der(wheel2.omega)"
+      valueReference="587202568"
+      description="der(wheel angular velocity)"
+      initial="approx">
+      <Real
+        unit="rad/s2"
+        start="0.0"
+        derivative="234"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 236 -->
+    <ScalarVariable
+      name="wheel2.Fxy"
+      valueReference="369098820"
+      description="Tire Force combined">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 237 -->
+    <ScalarVariable
+      name="wheel2.delta"
+      valueReference="100663365"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 238 -->
+    <ScalarVariable
+      name="wheel2.Fz"
+      valueReference="100663340">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 239 -->
+    <ScalarVariable
+      name="wheel2.Fxw"
+      valueReference="335544321">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 240 -->
+    <ScalarVariable
+      name="wheel2.Fyw"
+      valueReference="369098798">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 241 -->
+    <ScalarVariable
+      name="wheel2.Fxv"
+      valueReference="335544321">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 242 -->
+    <ScalarVariable
+      name="wheel2.Fyv"
+      valueReference="369098798">
+      <Real
+        declaredType="Modelica.SIunits.Force"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 243 -->
+    <ScalarVariable
+      name="wheel2.Drive_torque"
+      valueReference="637534278">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 244 -->
+    <ScalarVariable
+      name="wheel2.Brake_torque"
+      valueReference="637534258">
+      <Real
+        declaredType="Modelica.SIunits.Torque"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 245 -->
+    <ScalarVariable
+      name="wheel2.sxy"
+      valueReference="369098823"
+      description="combined slip">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 246 -->
+    <ScalarVariable
+      name="wheel2.fsxy"
+      valueReference="369098824"
+      description="tire coefficient">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 247 -->
+    <ScalarVariable
+      name="wheel2.sx"
+      valueReference="369098825"
+      description="longitudinal slip">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 248 -->
+    <ScalarVariable
+      name="wheel2.sy"
+      valueReference="369098826"
+      description="Lateral slip">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 249 -->
+    <ScalarVariable
+      name="wheel2.Je"
+      valueReference="16777322"
+      description="Engine inertia">
+      <Real
+        unit="J.s2.rad-1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 250 -->
+    <ScalarVariable
+      name="wheel2.i_T"
+      valueReference="905969690"
+      description="gear and final drive ratio product">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 251 -->
+    <ScalarVariable
+      name="Aped"
+      valueReference="352321536"
+      causality="input">
+      <Real start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 252 -->
+    <ScalarVariable
+      name="Bped"
+      valueReference="352321537"
+      causality="input">
+      <Real start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 253 -->
+    <ScalarVariable
+      name="swa"
+      valueReference="352321538"
+      causality="input">
+      <Real start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 254 -->
+    <ScalarVariable
+      name="theta"
+      valueReference="352321539"
+      causality="input">
+      <Real start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 255 -->
+    <ScalarVariable
+      name="r_gear"
+      valueReference="352321540"
+      causality="input">
+      <Real start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 256 -->
+    <ScalarVariable
+      name="hf"
+      valueReference="16777333"
+      causality="parameter"
+      variability="tunable">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 257 -->
+    <ScalarVariable
+      name="st_agear"
+      valueReference="16777334"
+      causality="parameter"
+      variability="fixed">
+      <Integer start="4"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 258 -->
+    <ScalarVariable
+      name="vx"
+      valueReference="335544320"
+      causality="output">
+      <Real
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 259 -->
+    <ScalarVariable
+      name="Fxr"
+      valueReference="335544321"
+      causality="output">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 260 -->
+    <ScalarVariable
+      name="x"
+      valueReference="335544322"
+      causality="output">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 261 -->
+    <ScalarVariable
+      name="y"
+      valueReference="335544323"
+      causality="output">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 262 -->
+    <ScalarVariable
+      name="ax"
+      valueReference="335544324"
+      causality="output">
+      <Real
+        unit="m/s2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 263 -->
+    <ScalarVariable
+      name="Fyf"
+      valueReference="335544325"
+      causality="output">
+      <Real
+        unit="N"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 264 -->
+    <ScalarVariable
+      name="delta"
+      valueReference="335544326"
+      causality="output">
+      <Real
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 265 -->
+    <ScalarVariable
+      name="decl"
+      valueReference="335544327"
+      causality="output">
+      <Real
+        unit="m/s2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 266 -->
+    <ScalarVariable
+      name="agear"
+      valueReference="335544328"
+      causality="output"
+      variability="discrete">
+      <Integer/>
+    </ScalarVariable>
+    <!-- Index for next variable = 267 -->
+    <ScalarVariable
+      name="ay"
+      valueReference="335544329"
+      causality="output">
+      <Real
+        unit="m/s2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 268 -->
+    <ScalarVariable
+      name="yaw_velocity"
+      valueReference="335544330"
+      causality="output">
+      <Real
+        unit="s-1"/>
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="258"
+        dependencies="21"
+        dependenciesKind="fixed"/>
+      <Unknown index="259"
+        dependencies="21 168 172 234"
+        dependenciesKind="dependent fixed fixed dependent"/>
+      <Unknown index="260"
+        dependencies="190"
+        dependenciesKind="fixed"/>
+      <Unknown index="261"
+        dependencies="192"
+        dependenciesKind="fixed"/>
+      <Unknown index="262"
+        dependencies="21 168 172 207 234 253 254"
+        dependenciesKind="dependent fixed fixed dependent dependent fixed dependent"/>
+      <Unknown index="263"
+        dependencies="21 168 172 207 253"
+        dependenciesKind="dependent fixed fixed dependent fixed"/>
+      <Unknown index="264"
+        dependencies="253"
+        dependenciesKind="fixed"/>
+      <Unknown index="265"
+        dependencies="21 168 172 207 234 253 254"
+        dependenciesKind="dependent fixed fixed dependent dependent fixed dependent"/>
+      <Unknown index="266"
+        dependencies="21"
+        dependenciesKind="dependent"/>
+      <Unknown index="267"
+        dependencies="21 168 172 207 234 253"
+        dependenciesKind="dependent fixed fixed dependent dependent fixed"/>
+      <Unknown index="268"
+        dependencies="172"
+        dependenciesKind="fixed"/>
+    </Outputs>
+    <Derivatives>
+      <Unknown index="22"
+        dependencies="21 168 172 207 234 253 254"
+        dependenciesKind="dependent dependent dependent dependent dependent fixed dependent"/>
+      <Unknown index="31"
+        dependencies="21 30 168 172 207 234 251 253 254"
+        dependenciesKind="dependent fixed dependent dependent dependent dependent dependent fixed dependent"/>
+      <Unknown index="169"
+        dependencies="21 168 172 207 234 253"
+        dependenciesKind="dependent fixed dependent dependent dependent fixed"/>
+      <Unknown index="171"
+        dependencies="172"
+        dependenciesKind="fixed"/>
+      <Unknown index="173"
+        dependencies="21 168 172 207 234 253"
+        dependenciesKind="dependent fixed fixed dependent dependent fixed"/>
+      <Unknown index="191"
+        dependencies="21 168 170"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="193"
+        dependencies="21 168 170"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="208"
+        dependencies="21 168 172 207 252 253"
+        dependenciesKind="dependent fixed fixed dependent fixed fixed"/>
+      <Unknown index="235"
+        dependencies="21 30 168 172 207 234 251 252 253 254 255"
+        dependenciesKind="dependent fixed dependent dependent dependent dependent dependent fixed fixed dependent dependent"/>
+    </Derivatives>
+    <InitialUnknowns>
+      <Unknown index="21"
+        dependencies="201"
+        dependenciesKind="dependent"/>
+      <Unknown index="22"
+        dependencies="145 146 147 149 160 161 162 163 168 172 198 199 200 201 225 226 227 228 253 254"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="31"
+        dependencies="13 14 15 16 17 30 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 78 79 80 81 82 83 84 85 86 87 88 89 90 145 146 147 149 160 161 162 163 168 172 198 199 200 201 225 226 227 228 251 253 254 256 257"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="169"
+        dependencies="145 146 147 149 168 172 198 199 200 201 225 226 227 228 253"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="171"
+        dependencies="172"
+        dependenciesKind="dependent"/>
+      <Unknown index="173"
+        dependencies="145 146 147 148 149 168 172 198 199 200 201 225 226 227 228 253"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="191"
+        dependencies="168 170 201"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="193"
+        dependencies="168 170 201"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="207"
+        dependencies="198 201"
+        dependenciesKind="dependent dependent"/>
+      <Unknown index="208"
+        dependencies="145 146 147 149 152 168 172 198 199 200 201 202 252 253"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="234"
+        dependencies="225 228"
+        dependenciesKind="dependent dependent"/>
+      <Unknown index="235"
+        dependencies="13 14 15 16 30 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 78 79 80 81 82 83 84 85 86 87 88 89 90 91 145 146 147 149 152 160 161 162 163 167 168 172 198 199 200 201 202 225 226 227 228 229 251 252 253 254 255 256 257"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="258"
+        dependencies="201"
+        dependenciesKind="dependent"/>
+      <Unknown index="259"
+        dependencies="145 146 147 168 172 201 225 226 227 228"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="260"
+        dependencies="190"
+        dependenciesKind="dependent"/>
+      <Unknown index="261"
+        dependencies="192"
+        dependenciesKind="dependent"/>
+      <Unknown index="262"
+        dependencies="145 146 147 149 160 161 162 163 168 172 198 199 200 201 225 226 227 228 253 254"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="263"
+        dependencies="145 146 147 149 168 172 198 199 200 201 253"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="264"
+        dependencies="149 253"
+        dependenciesKind="dependent dependent"/>
+      <Unknown index="265"
+        dependencies="145 146 147 149 160 161 162 163 168 172 198 199 200 201 225 226 227 228 253 254"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="266"
+        dependencies="257"
+        dependenciesKind="dependent"/>
+      <Unknown index="267"
+        dependencies="145 146 147 149 168 172 198 199 200 201 225 226 227 228 253"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="268"
+        dependencies="172"
+        dependenciesKind="dependent"/>
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

@@ -1,0 +1,603 @@
+#1
+char Aclass(3,24)
+Adymosim
+1.4
+Modelica experiment file
+
+
+#    Experiment parameters
+double experiment(7,1)
+       0                   # StartTime    Time at which integration starts
+                           #              (and linearization and trimming time)
+      25                   # StopTime     Time at which integration stops
+       0                   # Increment    Communication step size, if > 0
+     500                   # nInterval    Number of communication intervals, if > 0
+ 1.0000000000000000E-004   # Tolerance    Relative precision of signals for
+                           #              simulation, linearization and trimming
+       0                   # MaxFixedStep Maximum step size of fixed step size
+                           #              integrators, if > 0.0
+       8                   # Algorithm    Integration algorithm as integer (1...28)
+                           #
+                           #             | model|       |        | dense | state |
+                           # Algorithm   | typ  | stiff | order  | output| event |
+                           # ------------+------+-------+--------+-------+-------+
+                           #  1 | deabm  |  ode |   no  |  1-12  |  yes  |   no  |
+                           #  2 | lsode1 |  ode |   no  |  1-12  |  yes  |   no  |
+                           #  3 | lsode2 |  ode |  yes  |  1-5   |  yes  |   no  |
+                           #  4 | lsodar |  ode |  both |1-12,1-5|  yes  |  yes  |
+                           #  5 | dopri5 |  ode |   no  |   5    |   no  |   no  |
+                           #  6 | dopri8 |  ode |   no  |   8    |   no  |   no  |
+                           #  7 | grk4t  |  ode |  yes  |   4    |   no  |   no  |
+                           #  8 | dassl  |  dae |  yes  |  1-5   |  yes  |  yes  |
+                           #  9 | odassl | hdae |  yes  |  1-5   |  yes  |  yes  |
+                           # 10 | mexx   | hdae |   no  |  2-24  |   no  |   no  |
+                           # 11 | euler  |  ode |   no  |   1    |   no  |  yes  |
+                           # 12 | rkfix2 |  ode |   no  |   2    |   no  |  yes  |
+                           # 13 | rkfix3 |  ode |   no  |   3    |   no  |  yes  |
+                           # 14 | rkfix4 |  ode |   no  |   4    |   no  |  yes  |
+                           #>=14| others |  ode |yes/no |  2-5   |   yes |  yes  |
+                           # ---+--------+------+-------+--------+-------+-------+
+                           # euler and rkfix have fixed stepsize.
+
+
+#    Method tuning parameters
+double method(27,1)
+       1                   # grid     type of communication time grid, defined by
+                           #          = 1: equidistant points ("Increment/nInterval")
+                           #          = 2: vector of grid points ("tgrid")
+                           #          = 3: variable step integrator (automatically)
+                           #          = 4: model (call of "increment" in Dymola, e.g.
+                           #                      incr=Time > 2 then 0 else 0.1
+                           #                      dummy=increment(incr))
+                           #          grid = 1,3 is stopped by "StopTime"
+                           #          grid = 2   is stopped by "tgrid(last)"
+                           #          grid = 4   runs forever (stopped by model)
+       1                   # nt       Use every NT time instant, if grid = 3
+       3                   # dense    1/2/3 restart/step/interpolate GRID points
+       1                   # evgrid   0/1 do not/save event points in comm. time grid
+       1                   # evu      0/1 U-discontinuity does not/trigger events
+       0                   # evuord       U-discontinuity order to consider (0,1,...)
+       0                   # error    0/1/2 One message/warning/error messages
+       0                   # jac      0/1 Compute jacobian numerically/by BLOCKJ
+       0                   # xd0c     0/1 Compute/set XD0
+       0                   # f3       0/1 Ignore/use F3 of HDAE (= index 1)
+       0                   # f4       0/1 Ignore/use F4 of HDAE (= index 2)
+       0                   # f5       0/1 Ignore/use F5 of HDAE (= invar.)
+       0                   # debug    flags for debug information (1<<0 uses pdebug) 
+     100                   # pdebug       priority of debug information (1...100)
+       0                   # fmax     Maximum number of evaluations of BLOCKF, if > 0
+       0                   # ordmax   Maximum allowed integration order, if > 0
+       0                   # hmax     Maximum absolute stepsize, if > 0
+       0                   # hmin     Minimum absolute stepsize, if > 0 (use with care!)
+       0                   # h0       Stepsize to be attempted on first step, if > 0
+ 2.0000000000000000E-014   # teps     Bound to check, if 2 equal time instants
+ 1.0000000000000000E-010   # eveps    Hysteresis epsilon at event points
+      20                   # eviter   Maximum number of event iterations
+ 9.9999999999999995E-007   # delaym   Minimum time increment in delay buffers
+       1                   # fexcep   0/1 floating exception crashes/stops dymosim
+       1                   # tscale   clock-time = tscale*simulation-time, if grid = 5
+                           #          > 1: simulation too slow
+                           #          = 1: simulation-time = real-time
+                           #          < 1: simulation too fast
+       1                   # shared   (not used)
+    2473                   # memkey   (not used)
+
+
+#    Output parameters
+int settings(13,1)
+ 0                         # lprec    0/1 do not/store result data in double
+ 1                         # lx       0/1 do not/store x  (state variables)
+ 1                         # lxd      0/1 do not/store xd (derivative of states)
+ 1                         # lu       0/1 do not/store u  (input     signals)
+ 1                         # ly       0/1 do not/store y  (output    signals)
+ 0                         # lz       0/1 do not/store z  (indicator signals)
+ 1                         # lw       0/1 do not/store w  (auxiliary signals)
+ 1                         # la       0/1 do not/store a  (alias     signals)
+ 0                         # lperf    0/1 do not/store performance indicators
+ 0                         # levent   0/1 do not/store event point
+ 1                         # lres     0/1 do not/store results on result file
+ 0                         # lshare   0/1 do not/store info data for shared memory on dsshare.txt
+ 1                         # lform    0/1 ASCII/Matlab-binary storage format of results
+                           #              (for simulation/linearization; not for trimming)
+
+
+#    Names of initial variables
+char initialName(148,26)
+pi
+mue_pos[1, 1]
+mue_pos[1, 2]
+peak
+cgeo
+fn_max
+w_small
+tau0
+tau0_max
+free
+sa
+startForward
+startBackward
+locked
+Unknown
+Free
+Forward
+Stuck
+Backward
+mode
+unitAngularAcceleration
+unitTorque
+useHeatPort
+lossPower
+w_rel
+der(w_rel)
+wl
+der(wl)
+wr
+der(wr)
+tau
+mue0
+fn
+f_normalized
+k3max
+k2max
+k1max
+k0max
+k3min
+k2min
+k1min
+k0min
+w_eng_max
+w_eng_idl
+axh
+axl
+E_factor
+Tsplit
+k
+perc_throttle
+Aped
+torque
+Te
+max_torque
+min_torque
+Tbase
+Tdynreq
+Ttop
+der(Ttop)
+w_engine_in
+w_engine
+der(w_engine)
+rpm_engine
+tab_torque.nout
+tab_torque.tableOnFile
+tab_torque.table[1, 1]
+tab_torque.table[1, 2]
+tab_torque.table[2, 1]
+tab_torque.table[2, 2]
+tab_torque.table[3, 1]
+tab_torque.table[3, 2]
+tab_torque.table[4, 1]
+tab_torque.table[4, 2]
+tab_torque.table[5, 1]
+tab_torque.table[5, 2]
+tab_torque.table[6, 1]
+tab_torque.table[6, 2]
+tab_torque.table[7, 1]
+tab_torque.table[7, 2]
+tab_torque.table[8, 1]
+tab_torque.table[8, 2]
+tab_torque.table[9, 1]
+tab_torque.table[9, 2]
+tab_torque.table[10, 1]
+tab_torque.table[10, 2]
+tab_torque.table[11, 1]
+tab_torque.table[11, 2]
+tab_torque.table[12, 1]
+tab_torque.table[12, 2]
+tab_torque.table[13, 1]
+tab_torque.table[13, 2]
+tab_torque.table[14, 1]
+tab_torque.table[14, 2]
+tab_torque.table[15, 1]
+tab_torque.table[15, 2]
+tab_torque.table[16, 1]
+tab_torque.table[16, 2]
+tab_torque.table[17, 1]
+tab_torque.table[17, 2]
+tab_torque.verboseRead
+tab_torque.columns[1]
+tab_torque.smoothness
+tab_torque.tableID.id
+tab_torque.tableOnFileRead
+T_t
+T_ext
+ww
+Vx
+agear
+i_tm[1]
+i_tm[2]
+i_tm[3]
+i_tm[4]
+i_tm[5]
+i_tm[6]
+i_tm[7]
+i_tm[8]
+i_tm[9]
+i_tm[10]
+i_tm[11]
+i_tm[12]
+Je
+Jw
+upshift[1]
+upshift[2]
+upshift[3]
+upshift[4]
+upshift[5]
+upshift[6]
+upshift[7]
+upshift[8]
+upshift[9]
+upshift[10]
+upshift[11]
+upshift[12]
+downshift[1]
+downshift[2]
+downshift[3]
+downshift[4]
+downshift[5]
+downshift[6]
+downshift[7]
+downshift[8]
+downshift[9]
+downshift[10]
+downshift[11]
+downshift[12]
+rw
+
+double initialValue(148,6)
+  0 3.1415926535897931E+000  0       0                  6   256   # pi
+ -1       0                  0       0                  1   280   # mue_pos[1, 1]
+ -1 5.0000000000000000E-001  0       0                  1   280   # mue_pos[1, 2]
+ -1       1                  1 1.0000000000000000E+100  1   280   # peak
+ -1       1                  0 1.0000000000000000E+100  1   280   # cgeo
+ -1    1500                  0 1.0000000000000000E+100  1   280   # fn_max
+ -1 1.0000000000000000E+010  0       0                  1   280   # w_small
+  0       0                  0       0                  6   320   # tau0
+  0       0                  0       0                  6   320   # tau0_max
+  0       0                  0       0                  6   321   # free
+  0       0                  0       0                  6   256   # sa
+  0       0                  0       0                  6   361   # startForward
+  0       0                  0       0                  6   361   # startBackward
+  0       0                  0       0                  6   353   # locked
+  0       3                  0       0                  6   258   # Unknown
+  0       2                  0       0                  6   258   # Free
+  0       1                  0       0                  6   258   # Forward
+  0       0                  0       0                  6   258   # Stuck
+  0      -1                  0       0                  6   258   # Backward
+  0       3                 -1       3                  6   330   # mode
+  0       1                  0       0                  6   768   # unitAngularAcceleration
+  0       1                  0       0                  6   768   # unitTorque
+  0       0                  0       0                  6   769   # useHeatPort
+  0       0                  0       0                  6   256   # lossPower
+  0       0                  0       0                  6   256   # w_rel
+  0       0                  0       0                  6   256   # der(w_rel)
+  0 6.2831853071795862E+001  0       0                  6   256   # wl
+  0       0                  0       0                  6   256   # der(wl)
+ -1       0                  0       0                  2   280   # wr
+  0       0                  0       0                  3   256   # der(wr)
+  0       0                  0       0                  6   256   # tau
+  0       0                  0       0                  6   256   # mue0
+  0       0                  0       0                  6   320   # fn
+  0       0                  0       0                  6   320   # f_normalized
+ -1 -1.2460000000000000E-006  0       0                  1   280   # k3max
+ -1 1.4710000000000000E-004  0       0                  1   280   # k2max
+ -1 6.5110000000000001E+000  0       0                  1   280   # k1max
+ -1 -2.2286999999999998E+003  0       0                  1   280   # k0max
+ -1 -1.5900000000000000E-008  0       0                  1   280   # k3min
+ -1 8.7520000000000002E-005  0       0                  1   280   # k2min
+ -1 -1.9756899999999999E-001  0       0                  1   280   # k1min
+ -1 -4.2268100000000004E+000  0       0                  1   280   # k0min
+  0 2.1991148575128551E+002  0       0                  6   256   # w_eng_max
+  0 6.2831853071795862E+001  0       0                  6   256   # w_eng_idl
+ -1 9.0000000000000002E-001  0       0                  1   280   # axh
+ -1 8.0000000000000004E-001  0       0                  1   280   # axl
+ -1 9.0000000000000002E-001  0       0                  1   280   # E_factor
+ -1     700                  0       0                  1   280   # Tsplit
+ -1       1                  0       0                  1   280   # k
+  0       0                  0       0                  6   320   # perc_throttle
+  0       0                  0       0                  6   320   # Aped
+  0       0                  0       0                  6   256   # torque
+  0       0                  0       0                  6   256   # Te
+  0       0                  0       0                  6   256   # max_torque
+  0       0                  0       0                  6   256   # min_torque
+  0       0                  0       0                  6   256   # Tbase
+  0       0                  0       0                  6   256   # Tdynreq
+ -1       0                  0       0                  2   280   # Ttop
+  0       0                  0       0                  3   256   # der(Ttop)
+  0       0                  0       0                  6   256   # w_engine_in
+ -1 6.2831853071795862E+001  0       0                  2   280   # w_engine
+  0       0                  0       0                  3   256   # der(w_engine)
+  0       0                  0       0                  6   256   # rpm_engine
+  0       1                  0       0                  6   258   # tab_torque.nout
+  0       0                  0       0                  6   257   # tab_torque.tableOnFile
+ -1       0                  0       0                  1   280   # tab_torque.table[1, 1]
+ -1       0                  0       0                  1   280   # tab_torque.table[1, 2]
+ -1 6.2831800000000001E+001  0       0                  1   280   # tab_torque.table[2, 1]
+ -1    1660                  0       0                  1   280   # tab_torque.table[2, 2]
+ -1 7.3303799999999995E+001  0       0                  1   280   # tab_torque.table[3, 1]
+ -1    1880                  0       0                  1   280   # tab_torque.table[3, 2]
+ -1 8.3775000000000006E+001  0       0                  1   280   # tab_torque.table[4, 1]
+ -1    2240                  0       0                  1   280   # tab_torque.table[4, 2]
+ -1 9.4247000000000000E+001  0       0                  1   280   # tab_torque.table[5, 1]
+ -1    2900                  0       0                  1   280   # tab_torque.table[5, 2]
+ -1 1.0471899999999999E+002  0       0                  1   280   # tab_torque.table[6, 1]
+ -1    3550                  0       0                  1   280   # tab_torque.table[6, 2]
+ -1 1.1519100000000000E+002  0       0                  1   280   # tab_torque.table[7, 1]
+ -1    3550                  0       0                  1   280   # tab_torque.table[7, 2]
+ -1 1.2566300000000000E+002  0       0                  1   280   # tab_torque.table[8, 1]
+ -1    3550                  0       0                  1   280   # tab_torque.table[8, 2]
+ -1 1.3613499999999999E+002  0       0                  1   280   # tab_torque.table[9, 1]
+ -1    3550                  0       0                  1   280   # tab_torque.table[9, 2]
+ -1 1.4660700000000000E+002  0       0                  1   280   # tab_torque.table[10, 1]
+ -1    3550                  0       0                  1   280   # tab_torque.table[10, 2]
+ -1 1.5707900000000001E+002  0       0                  1   280   # tab_torque.table[11, 1]
+ -1    3470                  0       0                  1   280   # tab_torque.table[11, 2]
+ -1 1.6755099999999999E+002  0       0                  1   280   # tab_torque.table[12, 1]
+ -1    3310                  0       0                  1   280   # tab_torque.table[12, 2]
+ -1 1.7802300000000000E+002  0       0                  1   280   # tab_torque.table[13, 1]
+ -1    3120                  0       0                  1   280   # tab_torque.table[13, 2]
+ -1 1.8849500000000000E+002  0       0                  1   280   # tab_torque.table[14, 1]
+ -1    2880                  0       0                  1   280   # tab_torque.table[14, 2]
+ -1 1.9896700000000001E+002  0       0                  1   280   # tab_torque.table[15, 1]
+ -1    2660                  0       0                  1   280   # tab_torque.table[15, 2]
+ -1 2.0943899999999999E+002  0       0                  1   280   # tab_torque.table[16, 1]
+ -1    1680                  0       0                  1   280   # tab_torque.table[16, 2]
+ -1 2.1991100000000000E+002  0       0                  1   280   # tab_torque.table[17, 1]
+ -1       0                  0       0                  1   280   # tab_torque.table[17, 2]
+ -1       1                  0       0                  1   281   # tab_torque.verboseRead
+  0       2                  0       0                  6   258   # tab_torque.columns[1]
+  0       1                  1       5                  6   258   # tab_torque.smoothness
+  0       0                  0       0                  6  1282   # tab_torque.tableID.id
+  0       0                  0       0                  6  1280   # tab_torque.tableOnFileRead
+  0       0                  0       0                  6   320   # T_t
+  0       0                  0       0                  6   320   # T_ext
+  0       0                  0       0                  6   256   # ww
+  0       0                  0       0                  6   256   # Vx
+  0       1                  0       0                  6   330   # agear
+ -1 1.4356000000000000E+001  0       0                  1   280   # i_tm[1]
+ -1 1.1723900000000000E+001  0       0                  1   280   # i_tm[2]
+ -1 9.0363000000000007E+000  0       0                  1   280   # i_tm[3]
+ -1 7.0941000000000001E+000  0       0                  1   280   # i_tm[4]
+ -1 5.5381999999999998E+000  0       0                  1   280   # i_tm[5]
+ -1 4.3478000000000003E+000  0       0                  1   280   # i_tm[6]
+ -1 3.4363000000000001E+000  0       0                  1   280   # i_tm[7]
+ -1 2.6977000000000002E+000  0       0                  1   280   # i_tm[8]
+ -1 2.0783000000000000E+000  0       0                  1   280   # i_tm[9]
+ -1 1.6315999999999999E+000  0       0                  1   280   # i_tm[10]
+ -1 1.2738000000000000E+000  0       0                  1   280   # i_tm[11]
+ -1       1                  0       0                  1   280   # i_tm[12]
+ -1       1                  0       0                  1   280   # Je
+ -1       1                  0       0                  1   280   # Jw
+ -1 2.3100000000000001E+000  0       0                  1   280   # upshift[1]
+ -1       3                  0       0                  1   280   # upshift[2]
+ -1 3.8100000000000001E+000  0       0                  1   280   # upshift[3]
+ -1 4.8600000000000003E+000  0       0                  1   280   # upshift[4]
+ -1 6.2500000000000000E+000  0       0                  1   280   # upshift[5]
+ -1       8                  0       0                  1   280   # upshift[6]
+ -1 1.0020000000000000E+001  0       0                  1   280   # upshift[7]
+ -1 1.2800000000000001E+001  0       0                  1   280   # upshift[8]
+ -1 1.6649999999999999E+001  0       0                  1   280   # upshift[9]
+ -1 2.1199999999999999E+001  0       0                  1   280   # upshift[10]
+ -1 2.7100000000000001E+001  0       0                  1   280   # upshift[11]
+ -1 1.0000000000000000E+006  0       0                  1   280   # upshift[12]
+ -1 -1.0000000000000000E+006  0       0                  1   280   # downshift[1]
+ -1 2.2000000000000002E+000  0       0                  1   280   # downshift[2]
+ -1 2.2799999999999998E+000  0       0                  1   280   # downshift[3]
+ -1 3.5000000000000000E+000  0       0                  1   280   # downshift[4]
+ -1 4.5000000000000000E+000  0       0                  1   280   # downshift[5]
+ -1       6                  0       0                  1   280   # downshift[6]
+ -1 7.5000000000000000E+000  0       0                  1   280   # downshift[7]
+ -1 9.4000000000000004E+000  0       0                  1   280   # downshift[8]
+ -1      12                  0       0                  1   280   # downshift[9]
+ -1 1.5500000000000000E+001  0       0                  1   280   # downshift[10]
+ -1      20                  0       0                  1   280   # downshift[11]
+ -1      25                  0       0                  1   280   # downshift[12]
+ -1 5.0000000000000000E-001  0       0                  1   280   # rw
+
+
+# Matrix with 6 columns defining the initial value calculation
+# (columns 5 and 6 are not utilized for the calculation but are
+#  reported by dymosim via dymosim -i for user convenience):
+#
+# column 1: Type of initial value
+#           = -2: special case: for continuing simulation (column 2 = value)
+#           = -1: fixed value (column 2 = fixed value)
+#           =  0: free value, i.e., no restriction (column 2 = initial value)
+#           >  0: desired value (column 1 = weight for optimization
+#                                column 2 = desired value)
+#                 use weight=1, since automatic scaling usually
+#                 leads to equally weighted terms
+# column 2: fixed, free or desired value according to column 1.
+# column 3: Minimum value (ignored, if Minimum >= Maximum).
+# column 4: Maximum value (ignored, if Minimum >= Maximum).
+#           Minimum and maximum restrict the search range in initial
+#           value calculation. They might also be used for scaling.
+# column 5: Category of variable.
+#           = 1: parameter.
+#           = 2: state.
+#           = 3: state derivative.
+#           = 4: output.
+#           = 5: input.
+#           = 6: auxiliary variable.
+# column 6: Data type of variable and flags according to dsBaseType
+#  <value>&3= 0: real.
+#  <value>&3= 1: boolean.
+#  <value>&3= 2: integer.
+#
+# Initial values are calculated according to the following procedure:
+#
+# - If parameters, states and inputs are FIXED, and other variables
+#   are FREE, no special action takes place (default setting).
+#
+# - If there are only FIXED and FREE variables and the number of
+#   FREE parameters, states and inputs is IDENTICAL to the number of
+#   FIXED state derivatives, outputs and auxiliary variables, a non-linear
+#   equation is solved to determine a consistent set of initial conditions.
+#
+# - In all other cases the following optimization problem is solved:
+#      min( sum( weight(i)*( (value(i) - DESIRED(i))/scale(i) )^2 ) )
+#   under the constraint that the differential equation is fulfilled
+#   at the initial time. In most cases weight(i)=1 is sufficient, due
+#   to the automatic scaling (if DESIRED(i) is not close to zero,
+#   scale(i) = DESIRED(i). Otherwise, the scaling is based on the
+#   nominal value (and maybe minimum and maximum values given in 
+#   column 3 and 4). If these values are zero, scale(i)=1 is used).
+#
+char initialDescription(148,152)
+
+[w,mue] positive sliding friction coefficient (w_rel>=0)
+[w,mue] positive sliding friction coefficient (w_rel>=0)
+peak*mue_pos[1,2] = maximum value of mue for w_rel==0 [1]
+Geometry constant containing friction distribution assumption
+Maximum normal force [N]
+Relative angular velocity near to zero if jumps due to a reinit(..) of the velocity can occur (set to low value only if such impulses can occur) [rad/s]
+Friction torque for w_relfric=0 and forward sliding [N.m]
+Maximum friction torque for w_relfric=0 and locked [N.m]
+= true, if frictional element is not active [:#(type=Boolean)]
+Path parameter of friction characteristic tau = f(a_relfric) [1]
+= true, if w_relfric=0 and start of forward sliding [:#(type=Boolean)]
+= true, if w_relfric=0 and start of backward sliding [:#(type=Boolean)]
+true, if w_rel=0 and not sliding [:#(type=Boolean)]
+Value of mode is not known [:#(type=Integer)]
+Element is not active [:#(type=Integer)]
+w_relfric > 0 (forward sliding) [:#(type=Integer)]
+w_relfric = 0 (forward sliding, locked or backward sliding) [:#(type=Integer)]
+w_relfric < 0 (backward sliding) [:#(type=Integer)]
+Mode of friction (-1: backward sliding, 0: stuck, 1: forward sliding, 2: inactive, 3: unknown) [:#(type=Integer)]
+[rad/s2]
+[N.m]
+=true, if heatPort is enabled [:#(type=Boolean)]
+Loss power leaving component via heatPort (> 0, if heat is flowing out of component) [W]
+[rad/s]
+[rad/s2]
+[rad/s]
+[rad/s2]
+[rad/s]
+[rad/s2]
+[J]
+Friction coefficient for w=0 and forward sliding
+Normal force (fn=fn_max*f_normalized) [N]
+[1]
+
+
+
+
+[J.s3.rad-3]
+[J.s2.rad-2]
+[J.s.rad-1]
+[N.m]
+maximum engine rotation [rad/s]
+ engine idle speed [rad/s]
+Upper acceleration limit [m/s2]
+Lower acceleration limit [m/s2]
+
+[N.m]
+Boost pressure coefficient [s-1]
+[1]
+Accelerator pedal position [%] []
+engine torque [N.m]
+[N.m]
+[N.m]
+[N.m]
+[N.m]
+[N.m]
+[N.m]
+[W]
+[rad/s]
+engine speed in rad/s [rad/s]
+der(engine speed in rad/s) [rad/s2]
+engine speed in rpm [rad/s]
+Number of outputs [:#(type=Integer)]
+= true, if table is defined on file or in function usertab [:#(type=Boolean)]
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+Table matrix (grid = first column; e.g., table=[0,2])
+= true, if info message that file is loading is to be printed [:#(type=Boolean)]
+Columns of table to be interpolated [:#(type=Integer)]
+Smoothness of table interpolation [:#(type=Modelica.Blocks.Types.Smoothness)]
+[:#(type=Integer)]
+= 1, if table was successfully read from file
+[J]
+
+
+
+[:#(type=Integer)]
+
+
+
+
+
+
+
+
+
+
+
+
+[J.s2.rad-1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

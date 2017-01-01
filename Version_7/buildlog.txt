@@ -1,0 +1,37 @@
+Building FMU (Visual C++) 
+64-bit mode activated. 
+Compiling the model (Visual C++) with FMI. 
+ 
+fmi2Functions.c
+dsmodel.c
+C:/Program Files (x86)/Dymola 2017\source\matrixop.h(186) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+C:/Program Files (x86)/Dymola 2017\source\matrixop.h(1001) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(156) : warning C4090: 'function' : different 'const' qualifiers
+c:\program files (x86)\dymola 2017\source\matrixop.c(3128) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3513) : warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3561) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3571) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3580) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3589) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3601) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3611) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3621) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+c:\program files (x86)\dymola 2017\source\matrixop.c(3706) : warning C4267: 'function' : conversion from 'size_t' to 'SizeType', possible loss of data
+C:/Program Files (x86)/Dymola 2017\source\ModelicaStrings.c(94) : warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+C:/Program Files (x86)/Dymola 2017\source\ModelicaStrings.c(127) : warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+C:/Program Files (x86)/Dymola 2017\source\ModelicaStrings.c(225) : warning C4244: 'return' : conversion from '__int64' to 'int', possible loss of data
+Generating Code...
+   Creating library ~FMUOutput\binaries\win64\Version_07_Vehicles_vehicle.lib and object ~FMUOutput\binaries\win64\Version_07_Vehicles_vehicle.exp
+Compiling the model (Visual C++) with FMI. 
+ 
+fmi2Functions.c
+dsmodel.c
+c:\program files (x86)\dymola 2017\source\matrixop.c(156) : warning C4090: 'function' : different 'const' qualifiers
+Generating Code...
+   Creating library ~FMUOutput\binaries\win32\Version_07_Vehicles_vehicle.lib and object ~FMUOutput\binaries\win32\Version_07_Vehicles_vehicle.exp
+Adding [modelDescription.xml] ... OK
+Adding [binaries\win32\Version_07_Vehicles_vehicle.dll] ... OK
+Adding [binaries\win64\Version_07_Vehicles_vehicle.dll] ... OK
+ 
+Successful creation of Version_07_Vehicles_vehicle.fmu. 
+ 

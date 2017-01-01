@@ -1,0 +1,2 @@
+T=8.79 Log file opened Dec 15 2016 17:11:27, Dymosim DDE 2.00
+T=9.88 Log disabled
